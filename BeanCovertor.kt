@@ -214,9 +214,9 @@ fun mapToRtcEngineConfig(map: Map<*, *>): RtcEngineConfig {
 fun mapToAudioRecordingConfiguration(map: Map<*, *>): AudioRecordingConfiguration {
   return AudioRecordingConfiguration().apply {
     (map["filePath"] as? String)?.let { filePath = it }
-    (map["quality"] as? Number)?.let { recordingQuality = it.toInt() }
+    (map["recordingQuality"] as? Number)?.let { recordingQuality = it.toInt() }
     (map["recordingPosition"] as? Number)?.let { recordingPosition = it.toInt() }
-    (map["sampleRate"] as? Number)?.let { recordingSampleRate = it.toInt() }
+    (map["recordingQuality"] as? Number)?.let { recordingSampleRate = it.toInt() }
   }
 }
 
