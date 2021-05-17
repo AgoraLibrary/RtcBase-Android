@@ -469,6 +469,7 @@ public class Annotations {
     Constants.ERR_PUBLISH_STREAM_NOT_FOUND,
     Constants.ERR_PUBLISH_STREAM_FORMAT_NOT_SUPPORTED,
     Constants.ERR_MODULE_NOT_FOUND,
+    Constants.ERR_ALREADY_IN_RECORDING,
     Constants.ERR_LOAD_MEDIA_ENGINE,
     Constants.ERR_START_CALL,
     Constants.ERR_START_CAMERA,
