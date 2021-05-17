@@ -55,7 +55,6 @@ fun mapToAgoraImage(map: Map<*, *>): AgoraImage {
   }
 }
 
-@ExperimentalUnsignedTypes
 fun mapToTranscodingUser(map: Map<*, *>): TranscodingUser {
   return TranscodingUser().apply {
     (map["uid"] as? Number)?.let { uid = it.toNativeUInt() }
