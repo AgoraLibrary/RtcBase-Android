@@ -77,6 +77,8 @@ class IRtcEngine {
     fun enableContentInspect(params: Map<String, *>, callback: Callback)
 
     fun setAgoraLibPath(params: Map<String, *>, callback: Callback)
+
+    fun setAVSyncSource(params: Map<String, *>, callback: Callback)
   }
 
   interface RtcUserInfoInterface {
@@ -632,6 +634,15 @@ open class RtcEngineManager(
 
   override fun setAgoraLibPath(params: Map<String, *>, callback: Callback) {
     callback.success(RtcEngine.setAgoraLibPath(params["path"] as String))
+  }
+
+  override fun setAVSyncSource(params: Map<String, *>, callback: Callback) {
+    callback.success(
+      engine?.setAVSyncSource(
+        params["channelId"] as String,
+        (params["uid"] as Number).toNativeUInt()
+      )
+    )
   }
 
   override fun registerLocalUserAccount(params: Map<String, *>, callback: Callback) {

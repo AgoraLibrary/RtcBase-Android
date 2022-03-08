@@ -35,6 +35,8 @@ class IRtcChannel {
     fun unpublish(params: Map<String, *>, callback: Callback)
 
     fun getCallId(params: Map<String, *>, callback: Callback)
+
+    fun setAVSyncSource(params: Map<String, *>, callback: Callback)
   }
 
   interface RtcAudioInterface {
@@ -73,6 +75,14 @@ class IRtcChannel {
     fun addPublishStreamUrl(params: Map<String, *>, callback: Callback)
 
     fun removePublishStreamUrl(params: Map<String, *>, callback: Callback)
+
+    fun startRtmpStreamWithoutTranscoding(params: Map<String, *>, callback: Callback)
+
+    fun startRtmpStreamWithTranscoding(params: Map<String, *>, callback: Callback)
+
+    fun updateRtmpTranscoding(params: Map<String, *>, callback: Callback)
+
+    fun stopRtmpStream(params: Map<String, *>, callback: Callback)
   }
 
   interface RtcMediaRelayInterface {
@@ -224,6 +234,15 @@ class RtcChannelManager(
     callback.resolve(this[params["channelId"] as String]) { it.callId }
   }
 
+  override fun setAVSyncSource(params: Map<String, *>, callback: Callback) {
+    callback.code(
+      this[params["channelId"] as String]?.setAVSyncSource(
+        params["channelId"] as String,
+        (params["uid"] as Number).toNativeUInt()
+      )
+    )
+  }
+
   override fun adjustUserPlaybackSignalVolume(params: Map<String, *>, callback: Callback) {
     callback.code(
       this[params["channelId"] as String]?.adjustUserPlaybackSignalVolume(
@@ -323,6 +342,33 @@ class RtcChannelManager(
 
   override fun removePublishStreamUrl(params: Map<String, *>, callback: Callback) {
     callback.code(this[params["channelId"] as String]?.removePublishStreamUrl(params["url"] as String))
+  }
+
+  override fun startRtmpStreamWithoutTranscoding(params: Map<String, *>, callback: Callback) {
+    callback.code(this[params["channelId"] as String]?.startRtmpStreamWithoutTranscoding(params["url"] as String))
+  }
+
+  override fun startRtmpStreamWithTranscoding(params: Map<String, *>, callback: Callback) {
+    callback.code(
+      this[params["channelId"] as String]?.startRtmpStreamWithTranscoding(
+        params["url"] as String,
+        mapToLiveTranscoding(params["transcoding"] as Map<*, *>)
+      )
+    )
+  }
+
+  override fun updateRtmpTranscoding(params: Map<String, *>, callback: Callback) {
+    callback.code(
+      this[params["channelId"] as String]?.updateRtmpTranscoding(
+        mapToLiveTranscoding(
+          params["transcoding"] as Map<*, *>
+        )
+      )
+    )
+  }
+
+  override fun stopRtmpStream(params: Map<String, *>, callback: Callback) {
+    callback.code(this[params["channelId"] as String]?.stopRtmpStream(params["url"] as String))
   }
 
   override fun startChannelMediaRelay(params: Map<String, *>, callback: Callback) {
